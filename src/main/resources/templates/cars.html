@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h1>Autos</h1>
+    <a href="/">Zurück zur Landing Page</a>
+
+    <h3>List with BMWs</h3>
+    <ul id="bmw-list">
+        <li v-for="item in items">
+            Model: {{ item.modelName }}, Farbe: {{ item.color }}, Räder: {{ item.wheels }}
+        </li>
+    </ul>
+
+    <script>
+        var example1 = new Vue({
+            el: '#bmw-list',
+            created: function () {
+              this.loadData();
+            },
+            data: {
+                items: null
+            },
+            methods: {
+                loadData: function (viewerUserId, posterUserId) {
+                    $.ajax({
+                        contentType: "application/json",
+                        dataType: "json",
+                        url: "/cars/bmw",
+                        data: {modelName:"i8"},
+                        method: "Get",
+                        success: response => {
+                            this.content = "loaded";
+                            this.items = response;
+                        },
+                        error: err => console.log("Error: " + err)
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+</html>
