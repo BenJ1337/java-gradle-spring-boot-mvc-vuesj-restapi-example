@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServiceConfiguration {
     @Bean
-    ICarService carService() {
+    public ICarService carService() {
         return new CarService();
     }
 }

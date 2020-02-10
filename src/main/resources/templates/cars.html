@@ -3,49 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Autos</h1>
+                <a href="/" class="btn btn-primary">Zurück zur Landing Page</a>
+            </div>
+            <div class="col-md-6">
+                <h3>List with BMWs</h3>
+                <ul id="bmw-list">
+                    <li v-for="item in items">
+                        Model: {{ item.modelName }}, Farbe: {{ item.color }}, Räder: {{ item.wheels }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Auto hinzufügen</h3>
+                <form id="addCarForm" enctype='application/json'>
+                    <div class="form-group">
+                        <label>Model Name:</label>
+                        <input class="form-control" type="text" name="modelName">
+                    </div>
+                    <div class="form-group">
+                        <label>Farbe:</label>
+                        <input class="form-control" type="text" name="color">
+                    </div>
+                    <div class="form-group">
+                        <label>Räder:</label>
+                        <input class="form-control" type="text" name="wheels">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" onClick="addCar();">Hinzufügen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script
             src="https://code.jquery.com/jquery-2.2.4.min.js"
             integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
             crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-</head>
-<body>
-    <h1>Autos</h1>
-    <a href="/">Zurück zur Landing Page</a>
-
-    <h3>List with BMWs</h3>
-    <ul id="bmw-list">
-        <li v-for="item in items">
-            Model: {{ item.modelName }}, Farbe: {{ item.color }}, Räder: {{ item.wheels }}
-        </li>
-    </ul>
-
-    <script>
-        var example1 = new Vue({
-            el: '#bmw-list',
-            created: function () {
-              this.loadData();
-            },
-            data: {
-                items: null
-            },
-            methods: {
-                loadData: function (viewerUserId, posterUserId) {
-                    $.ajax({
-                        contentType: "application/json",
-                        dataType: "json",
-                        url: "/cars/bmw",
-                        data: {modelName:"i8"},
-                        method: "Get",
-                        success: response => {
-                            this.content = "loaded";
-                            this.items = response;
-                        },
-                        error: err => console.log("Error: " + err)
-                    });
-                }
-            }
-        })
-    </script>
+    <script src="/cars.js"></script>
 </body>
 </html>

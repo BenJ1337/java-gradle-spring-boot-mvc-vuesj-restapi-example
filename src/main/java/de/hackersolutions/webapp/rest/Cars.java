@@ -1,11 +1,10 @@
 package de.hackersolutions.webapp.rest;
 
-import de.hackersolutions.webapp.domain.BMW;
+import de.hackersolutions.webapp.domain.Car;
 import de.hackersolutions.webapp.service.ICarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,14 +15,22 @@ public class Cars {
     ICarService carService;
 
     @GetMapping("/cars/bmw")
-    public List<BMW> bmw(@RequestParam(value = "modelName", defaultValue = "-1") String modelName) {
-        List<BMW> bmwList = carService.findAllCars();
+    public List<Car> bmw(@RequestParam(value = "modelName", defaultValue = "-1") String modelName) {
+        List<Car> carList = carService.findAllCars();
         if("-1".equals(modelName)) {
-            return bmwList;
+            return carList;
         } else {
-            bmwList.stream().filter(bmw -> bmw.getModelName().equals(modelName));
+            carList.stream().filter(car -> car.getModelName().equals(modelName));
         }
-        return bmwList;
+        return carList;
+    }
+
+    @PostMapping(path = "/cars/bmw", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public Car addBmw(@RequestBody Car newCar) {
+
+        carService.addCar(newCar);
+
+        return newCar;
     }
 
 }
